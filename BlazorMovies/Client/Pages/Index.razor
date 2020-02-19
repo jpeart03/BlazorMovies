@@ -1,0 +1,23 @@
+﻿@page "/"
+@inject IRepository repository
+
+<div>
+    <h3>Movies:</h3>
+    <MoviesList Movies="movies" />
+</div>
+
+<button @onclick="OnAddMovie">Add New Movie</button>
+
+@code {
+    private List<Movie> movies;
+
+    protected override void OnInitialized()
+    {
+        movies = repository.GetMovies();
+    }
+
+    private void OnAddMovie()
+    {
+        movies.Add(new Movie() { Title = "New Movie", ReleaseDate = DateTime.Today });
+    }
+}
