@@ -17,20 +17,25 @@ namespace BlazorMovies.Client.Pages
         private int currentCount = 0;
         private static int currentCountStatic = 0;
 
-
-        private void IncrementCount()
+        [JSInvokable]
+        public async Task IncrementCount()
         {
             currentCount++;
             currentCountStatic++;
             singleton.Value = currentCount;
             transient.Value = currentCount;
-            js.InvokeVoidAsync("");
+            await js.InvokeVoidAsync("dotnetStaticInvocation");
+        }
+
+        private async Task IncrementCountJavascript()
+        {
+            await js.InvokeVoidAsync("dotnetInstanceInvocation", DotNetObjectReference.Create(this));
         }
 
         protected override void OnInitialized()
         {
             movies = new List<Movie>()
-{
+            {
             new Movie(){Title = "Once Upon a Time in Hollywood", ReleaseDate= new DateTime(2019, 12, 01)},
             new Movie(){Title = "Sonic", ReleaseDate= new DateTime(2020, 02, 14)},
         };
