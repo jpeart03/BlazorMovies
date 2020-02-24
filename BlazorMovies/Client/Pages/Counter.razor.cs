@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BlazorMovies.Shared.Entities;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using BlazorMovies.Client.Helpers;
 
 namespace BlazorMovies.Client.Pages
 {
@@ -12,6 +13,9 @@ namespace BlazorMovies.Client.Pages
     {
         [Inject]
         IJSRuntime js { get; set; }
+
+        [CascadingParameter]
+        public AppState AppState { get; set; }
 
         private List<Movie> movies;
         private int currentCount = 0;
